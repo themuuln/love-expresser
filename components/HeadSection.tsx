@@ -6,7 +6,7 @@ const HeadSection: React.FC = () => {
   const { girlName } = useContext(GirlNameContext);
   return (
     <Head>
-      <title>Hi, {girlName.toUpperCase()}</title>
+      <title>Hi {girlName.toUpperCase()} ❤️</title>
       <meta
         name="description"
         content="Create a minimalistic website to convey your deepest emotions and words to your crush ❤"
