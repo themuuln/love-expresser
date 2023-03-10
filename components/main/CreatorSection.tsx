@@ -38,12 +38,12 @@ const CreatorSection: React.FC = () => {
   });
 
   return (
-    <div className="container flex flex-col items-center justify-center ">
-      <div className="flex flex-col gap-6 max-w-fit">
+    <div className="container flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center gap-2 max-w-fit">
         {components}
         <motion.button
           onClick={addComponent}
-          className="flex items-center justify-center w-full border-2 border-dashed rounded border-bright-pink"
+          className="flex items-center justify-center max-w-full border-2 border-dashed mt-4 rounded w-[320px] h-12 border-bright-pink"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}

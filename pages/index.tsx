@@ -1,9 +1,9 @@
-import MainSection from "@/components/main/MainSection";
+import CreatorSection from "@/components/main/CreatorSection";
 
 export default function Home() {
   return (
     <>
-      <MainSection />
+      <CreatorSection />
     </>
   );
 }
