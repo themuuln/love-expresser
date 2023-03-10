@@ -1,51 +1,57 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
-import HeadSection from "../HeadSection";
-import { GirlNameContext } from "../GirlNameContext";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import HeadTitle from "./form/HeadTitle";
+import { questions } from "@/pages/api/questions";
 
 const CreatorSection: React.FC = () => {
   const [girlName, setGirlName] = useState<string>("");
+  const [componentCount, setComponentCount] = useState<number>(1);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    setGirlName("");
-  };
-
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGirlName(event.target.value);
   };
 
+  const addComponent = () => {
+    setComponentCount(componentCount + 1);
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  };
+
+  const components = questions.map((question, index) => {
+    const isVisible = index <= currentQuestionIndex;
+    return (
+      <>
+        <AnimatePresence>
+          {isVisible && (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <HeadTitle question={question} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>
+    );
+  });
+
   return (
-    <GirlNameContext.Provider value={{ girlName, setGirlName }}>
-      <div className="w-[50vw] flex justify-center ">
-        <form
-          className="form-control w-full max-w-xs"
-          onSubmit={(event: FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            setGirlName("");
-          }}
+    <div className="container flex flex-col items-center justify-center ">
+      <div className="flex flex-col gap-6 max-w-fit">
+        {components}
+        <motion.button
+          onClick={addComponent}
+          className="flex items-center justify-center w-full border-2 border-dashed rounded border-bright-pink"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
         >
-          <label className="label">
-            <span className="label-text">What is girl&apos;s name?</span>
-          </label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-              value={girlName}
-              onChange={handleInputChange}
-              // onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              //   setGirlName(event.target.value);
-              // }}
-            />
-            <button onClick={handleSubmit} type="submit" className="btn">
-              Submit
-            </button>
-          </div>
-        </form>
+          +
+        </motion.button>
       </div>
-      <HeadSection />
-    </GirlNameContext.Provider>
+    </div>
   );
 };
 
